@@ -1,16 +1,25 @@
 class Solution {
     public int[] pivotArray(int[] nums, int pivot) {
-        int idx = 0;
-        int[] result = new int[nums.length];
-        for(int num : nums){
-            if(num < pivot) result[idx++] = num;
+        int N = nums.length;
+        if (N == 1) {
+            return nums;
         }
-        for(int num : nums){
-            if(num == pivot) result[idx++] = num;
+        
+        int[] res = new int[N];
+        int l = -1, r = N;
+        //collect all elements smaller than pivot
+        for (int i = 0; i < N; i++) {
+            if (nums[i] < pivot) {
+                res[++l] = nums[i];
+            }
+            if (nums[N - 1 - i] > pivot) {
+                res[--r] = nums[N - 1 - i];
+            }
         }
-        for(int num : nums){
-            if(num > pivot) result[idx++] = num;
+        //fill the pivot elements if any
+        for (int i = l + 1; i <= r - 1; i++) {
+            res[i] = pivot;
         }
-        return result;
+        return res;
     }
 }
