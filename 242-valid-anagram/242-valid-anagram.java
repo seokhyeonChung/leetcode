@@ -1,16 +1,20 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
         if(s.length() != t.length()) return false;
-        HashMap<Character,Integer> mapS = new HashMap<>();
+        
+        int[] alphabet = new int[26];
         for(int i =0; i<s.length(); i++){
-            mapS.put(s.charAt(i), mapS.getOrDefault(s.charAt(i), 0) +1);
+            alphabet[s.charAt(i) - 'a']++;
         }
         
-        HashMap<Character,Integer> mapT = new HashMap<>();
         for(int i =0; i<t.length(); i++){
-            mapT.put(t.charAt(i), mapT.getOrDefault(t.charAt(i), 0) +1);
+            alphabet[t.charAt(i) - 'a']--;
         }
         
-        return mapS.equals(mapT) ? true : false;
+        for(int i =0; i<alphabet.length; i++){
+            if(alphabet[i] !=0) return false;
+        }
+        
+        return true;
     }
 }
