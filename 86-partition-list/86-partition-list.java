@@ -10,30 +10,26 @@
  */
 class Solution {
     public ListNode partition(ListNode head, int x) {
-        ListNode result = new ListNode(0, head);
-        ListNode temp = result;
-        ListNode pointer = result;
+        ListNode before_head = new ListNode(0);
+        ListNode before = before_head;
+        ListNode after_head = new ListNode(0);
+        ListNode after = after_head;
         
-        while(pointer.next != null){
-            if(pointer.next.val < x){
-                if(pointer == temp){
-                    pointer = pointer.next;
-                } else if(temp.next != null && pointer.next != null){
-                    this.swap(temp, pointer);
-                }
-                temp = temp.next;
+        while(head != null){
+            if(head.val < x ){
+                before.next = head;
+                before = before.next;
             } else{
-                pointer = pointer.next;
+                after.next = head;
+                after = after.next;
             }
+            
+            head = head.next;
         }
         
-        return result.next;
-    }
-    
-    private void swap(ListNode l1, ListNode l2){
-        ListNode temp = l2.next;
-        l2.next = temp.next;
-        temp.next = l1.next;
-        l1.next = temp;
+        after.next = null;
+        before.next = after_head.next;
+        
+        return before_head.next;
     }
 }
